@@ -11,16 +11,16 @@
             Savr
         </h1>
         <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
-            doloremque, dolor impedit fugiat sint et error a ipsam tenetur.
-            Impedit minus, amet laudantium deserunt tenetur animi, quos sit ipsa
-            dolores magni nisi tempora explicabo. Totam sunt natus ea, nihil
-            animi similique accusantium maiores aliquam recusandae officiis,
-            voluptas adipisci quod magni quasi sequi unde ex vero at ratione
-            doloremque quam nesciunt harum facere distinctio. Repellat qui rerum
-            dolores fugit sunt eligendi animi incidunt, architecto quaerat! At
-            suscipit incidunt repudiandae in dicta, laboriosam facilis
-            praesentium nisi accusamus illum ea nulla sed saepe.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
+            facere similique eaque tempore modi, fugiat ad nemo porro. Fugiat
+            nostrum possimus, quas beatae tenetur incidunt? Consequuntur harum
+            doloremque ut optio esse, soluta odit, ab nobis tenetur delectus
+            aliquam quaerat molestiae dolorem. Obcaecati mollitia molestiae ad
+            maxime ullam debitis accusantium itaque explicabo, fugit aspernatur
+            alias nulla atque dolorem sunt laborum corrupti ipsam temporibus
+            odit porro. Voluptates iure animi excepturi odio, quos magnam qui
+            recusandae ut minima nam non nulla cupiditate consectetur quasi ipsa
+            esse inventore temporibus error harum quia praesentium molestias.
         </p>
     </div>
     <div class="buttons">

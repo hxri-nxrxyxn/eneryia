@@ -14,7 +14,7 @@
 <style>
     .nav {
         display: flex;
-        background-color: white;
+        background-color: transparent;
         z-index: 99;
         margin-bottom: 0.5rem;
         position: relative;
