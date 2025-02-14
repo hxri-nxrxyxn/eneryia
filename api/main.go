@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/savr/database"
 	"github.com/savr/models"
+	"github.com/savr/routes"
 )
 
 func main() {
@@ -28,6 +29,8 @@ func main() {
 	})
 
 	models.MigrateUser(db)
+
+	routes.UserRoutes(db, app)
 
 	app.Listen(":8080")
 }

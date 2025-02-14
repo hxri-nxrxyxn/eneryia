@@ -9,6 +9,30 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetUser(db *gorm.DB) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		return c.SendString("Get User")
+	}
+}
+
+func GetUsers(db *gorm.DB) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		return c.SendString("Get Users")
+	}
+}
+
+func UpdateUser(db *gorm.DB) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		return c.SendString("Get User")
+	}
+}
+
+func Login(db *gorm.DB) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		return c.SendString("Get User")
+	}
+}
+
 func CreateUser(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		user := new(models.User)
