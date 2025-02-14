@@ -1,7 +1,7 @@
 import { App } from "@capacitor/app";
 import { navigate } from "svelte-routing";
 
-const baseUrl = "https://api.laddu.cc";
+const baseUrl = "https://api.laddu.cc/api/v1";
 
 function handleBackButton(fallbackUrl) {
   sessionStorage.setItem("fallbackPage", fallbackUrl);
@@ -19,6 +19,7 @@ function handleBackButton(fallbackUrl) {
 
 async function signup(data) {
   try {
+    console.log(data)
     const response = await fetch(`${baseUrl}/register`, {
       method: "POST",
       headers: {
@@ -28,12 +29,12 @@ async function signup(data) {
     });
     const res = await response.json();
     if (!response.ok) {
-      alert(res.message);
+      console.log(res);
       return;
     }
-    navigate("/dashboard", { replace: true });
+    navigate("/collect", { replace: true });
   } catch (error) {
-    alert(`Error creating data:${error}`);
+    console.log(error);
   }
 }
 
