@@ -8,8 +8,7 @@ import (
 
 func RecipeRoutes(db *gorm.DB, app *fiber.App) {
 	api := app.Group("/api/v1")
-	api.Post("/ingredient", controller.CreateIngredient(db))
-	api.Get("/ingredient/:id", controller.GetIngredient(db))
-	api.Get("/ingredients", controller.GetIngredients(db))
-	api.Put("/ingredient/:id", controller.AddIngredient(db))
+	api.Post("/recipe", controller.CreateRecipe(db))
+	api.Get("/recipe/:id", controller.GetRecipe(db))
+	api.Put("/recipe/:id", controller.AddRecipe(db))
 }
