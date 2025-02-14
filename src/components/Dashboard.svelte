@@ -21,7 +21,7 @@
                 <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
-                        <h3>Pineapple Curry</h3>
+                        <h3>Paneer Curry</h3>
                         <p>
                             Lorem ipsum dolor sit amet consectetur, adipisicing
                             elit. Omnis, quibusdam?
@@ -43,7 +43,7 @@
                 <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
-                        <h3>Pineapple Curry</h3>
+                        <h3>Paneer Curry</h3>
                         <p>
                             Lorem ipsum dolor sit amet consectetur, adipisicing
                             elit. Omnis, quibusdam?
@@ -61,7 +61,7 @@
                 <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
-                        <h3>Pineapple Curry</h3>
+                        <h3>Paneer Curry</h3>
                         <p>
                             Lorem ipsum dolor sit amet consectetur, adipisicing
                             elit. Omnis, quibusdam?
