@@ -87,6 +87,7 @@
     }
     .card {
         display: flex;
+        flex-direction: column;
         width: 100%;
         background: #111;
         border-radius: 10px;
@@ -95,11 +96,10 @@
     }
     .card__details {
         padding: 1rem;
-        width: 70%;
     }
     .card__banner {
-        width: 30%;
         background-color: var(--color-primary);
+        height: 20vh;
     }
     .card h3 {
         margin-bottom: 1rem;
