@@ -6,7 +6,6 @@
     let email = $state("");
     let password = $state("");
     const onclick = async () => {
-        console.log("meow");
         const data = {
             email: email,
             password: password,

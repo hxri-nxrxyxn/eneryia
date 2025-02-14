@@ -91,7 +91,7 @@ async function checkUser() {
   const {value} = await Storage.get({ key : "token"});
   console.log(value)
   if (!value) {
-    navigate("/signup", { replace: true });
+    navigate("/login", { replace: true });
     return;
   }
   const response = await fetch(`${baseUrl}/verify`, {
@@ -104,7 +104,7 @@ async function checkUser() {
   const res = await response.json();
   if (!response.ok) {
     alert(res.message);
-    navigate("/signup", { replace: true });
+    navigate("/login", { replace: true });
     return;
   }
   const id = res.id;
@@ -131,4 +131,26 @@ async function logout() {
 }
 }
 
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout };
+async function login(data) {
+  try {
+    console.log(data)
+    const response = await fetch(`${baseUrl}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    if (!response.ok) {
+      alert(res.message);
+      return;
+    }
+    await setToken(res.token);
+    navigate("/dashboard", { replace: true });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login };
