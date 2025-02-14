@@ -15,7 +15,8 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
-		AllowMethods: "*",
+		AllowMethods: "GET,POST,PUT,DELETE",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 
 	db, err := database.NewConnection()
@@ -28,8 +29,11 @@ func main() {
 	})
 
 	models.MigrateUser(db)
+	models.MigrateIngredient(db)
+	models.MigrateRecipe(db)
 
 	routes.UserRoutes(db, app)
+	routes.IngredientRoutes(db, app)
 
 	app.Listen(":8080")
 }
