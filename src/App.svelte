@@ -7,6 +7,7 @@
     import Terms from "./components/Terms.svelte";
     import Dashboard from "./components/Dashboard.svelte";
     import Recipe from "./components/Recipe.svelte";
+    import Inventory from "./components/Inventory.svelte";
 </script>
 
 <main>
@@ -18,6 +19,7 @@
         <Route path="/terms" component={Terms} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/recipe" component={Recipe} />
+        <Route path="/inventory" component={Inventory} />
     </Router>
 </main>
 
