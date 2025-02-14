@@ -1,13 +1,85 @@
 package controller
 
 import (
+	"errors"
+	"os"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 	"github.com/savr/models"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
+
+func VerifyUser(db *gorm.DB) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		tokenString := c.Get("Authorization")
+		if tokenString == "" {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "No token found",
+			})
+		}
+
+		tokenString = tokenString[7:]
+
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, errors.New("invalid token Here")
+			}
+			return []byte(os.Getenv("SECRET_KEY")), nil
+		})
+
+		if err != nil || !token.Valid {
+			return c.Status(402).JSON(fiber.Map{
+				"message": "Invalid token",
+				"error":   err.Error(),
+			})
+		}
+
+		claims, _ := token.Claims.(jwt.MapClaims)
+		UserID := claims["UserID"]
+		if UserID == nil {
+			return c.Status(403).JSON(fiber.Map{
+				"message": "User Id not found in tokens",
+				"calims":  claims,
+			})
+		}
+
+		return c.Status(200).JSON(fiber.Map{
+			"message": "User verified",
+			"id":      UserID,
+		})
+
+	}
+}
+
+func GenerateJWT(user *models.User) (string, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		return "", err
+	}
+
+	key := (os.Getenv("SECRET_KEY"))
+	if key == "" {
+		return "", errors.New("SECRET_KEY not found")
+	}
+
+	claims := jwt.MapClaims{
+		"UserID": user.UserID,
+		"Email":  user.Email,
+		"exp":    time.Now().Add(time.Hour * 24).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(key))
+	if err != nil {
+		return "", err
+	}
+	return tokenString, nil
+}
 
 func GetUser(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
@@ -43,7 +115,56 @@ func UpdateUser(db *gorm.DB) func(*fiber.Ctx) error {
 
 func Login(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		return c.SendString("Get User")
+		userData := new(models.User)
+
+		err := c.BodyParser(userData)
+		if err != nil {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "Could not parse Body",
+				"error":   err.Error(),
+			})
+		}
+
+		if userData.Email == "" || userData.Password == "" {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Email or Password is missing",
+			})
+		}
+
+		user := new(models.User)
+		err = db.Where("email = ?", userData.Email).First(user).Error
+		if err != nil {
+			if strings.Contains(err.Error(), "record not found") {
+				return c.Status(404).JSON(fiber.Map{
+					"message": "User not found",
+				})
+			}
+
+			return c.Status(500).JSON(fiber.Map{
+				"message": "Could not retrieve user",
+				"error":   err.Error(),
+			})
+		}
+
+		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userData.Password))
+		if err != nil {
+			return c.Status(402).JSON(fiber.Map{
+				"message": "Invalid Password",
+			})
+		}
+
+		token, err := GenerateJWT(user)
+		if err != nil {
+			return c.Status(502).JSON(fiber.Map{
+				"message": "Could not generate token",
+				"error":   err.Error(),
+			})
+		}
+
+		return c.Status(200).JSON(fiber.Map{
+			"message": "User logged in",
+			"token":   token,
+		})
 	}
 }
 
@@ -90,9 +211,18 @@ func CreateUser(db *gorm.DB) func(*fiber.Ctx) error {
 			})
 		}
 
+		token, err := GenerateJWT(user)
+		if err != nil {
+			return c.Status(502).JSON(fiber.Map{
+				"message": "Could not generate token",
+				"error":   err.Error(),
+			})
+		}
+
 		return c.Status(201).JSON(fiber.Map{
 			"message": "User created",
 			"data":    user,
+			"token":   token,
 		})
 	}
 }

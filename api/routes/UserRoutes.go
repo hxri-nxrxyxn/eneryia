@@ -12,4 +12,5 @@ func UserRoutes(db *gorm.DB, app *fiber.App) {
 	api.Patch("/users/:id", controller.UpdateUser(db))
 	api.Post("/register", controller.CreateUser(db))
 	api.Post("/login", controller.Login(db))
+	api.Get("/verify", controller.VerifyUser(db))
 }
