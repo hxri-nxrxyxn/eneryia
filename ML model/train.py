@@ -25,7 +25,69 @@ test_datagen = ImageDataGenerator(rescale = 1./255)
 x_train = train_datagen.flow_from_directory(r"fruits-360/Training",target_size=(64,64), batch_size = 64, class_mode = "categorical")
 x_test = train_datagen.flow_from_directory(r"fruits-360/Test",target_size=(64,64), batch_size = 64, class_mode = "categorical")
 
-history = model.fit(x_train, steps_per_epoch = 945,epochs=10,validation_data = x_test,validation_steps = 322)
+
+import tensorflow as tf
+from tensorflow.keras.optimizers import Adam
+import numpy as np
+
+model.compile(
+    optimizer=Adam(learning_rate=0.0001),
+    loss="categorical_crossentropy",
+    metrics=["accuracy", tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall')]
+)
+# Compute correct steps per epoch and validation steps
+steps_per_epoch = int(np.ceil(x_train.samples / x_train.batch_size))
+validation_steps = int(np.ceil(x_test.samples / x_test.batch_size))
+
+history = model.fit(x_train, steps_per_epoch = 945,epochs=15,validation_data = x_test,validation_steps = 322)
+print(history.history.keys())
+# Train the model
+history = model.fit(
+    x_train,
+    steps_per_epoch=steps_per_epoch,
+    epochs=15,
+    validation_data=x_test,
+    validation_steps=validation_steps
+)
+
+# ✅ Place the plotting code **after training** to visualize the results
+available_metrics = history.history.keys()
+import matplotlib.pyplot as plt
+plt.figure(figsize=(12, 4))
+
+# Training & Validation Loss
+plt.subplot(1, 3, 1)
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model Loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Training Loss', 'Validation Loss'], loc='upper left')
+
+# Training & Validation Accuracy
+plt.subplot(1, 3, 2)
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model Accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Training Accuracy', 'Validation Accuracy'], loc='upper left')
+
+# Precision & Recall (Only Plot If Available)
+if 'precision' in available_metrics and 'recall' in available_metrics:
+    plt.subplot(1, 3, 3)
+    plt.plot(history.history['precision'])
+    plt.plot(history.history['val_precision'])
+    plt.plot(history.history['recall'])
+    plt.plot(history.history['val_recall'])
+    plt.title('Precision & Recall')
+    plt.ylabel('Score')
+    plt.xlabel('Epoch')
+    plt.legend(['Train Precision', 'Val Precision', 'Train Recall', 'Val Recall'], loc='upper left')
+
+plt.tight_layout()
+plt.show()
+
 
 # Data augmentation
 train_datagen = ImageDataGenerator(
