@@ -21,7 +21,6 @@
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/recipe" component={Recipe} />
         <Route path="/inventory" component={Inventory} />
-        <Route path="/model" component={Model} />
     </Router>
 </main>
 
