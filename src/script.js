@@ -1,5 +1,36 @@
 import { App } from "@capacitor/app";
 import { navigate } from "svelte-routing";
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+
+const checkPermission = async () => {
+  const status = await BarcodeScanner.checkPermission({ force: true });
+
+  if (status.granted) {
+    return true;
+  }
+
+  if (status.denied) {
+    console.log("Permission denied");
+    return false;
+  }
+
+  return false;
+};
+
+const startScanning = async () => {
+
+  BarcodeScanner.hideBackground();
+  document.body.style.background = "transparent";
+  const result = await BarcodeScanner.startScan();
+  document.body.style.background = "black";
+
+
+  if (result.hasContent) {
+    alert(`Scanned content: ${result.content}`);
+  } else {
+    console.log("No content scanned");
+  }
+};
 
 const baseUrl = "https://api.laddu.cc/api/v1";
 
@@ -16,6 +47,13 @@ function handleBackButton(fallbackUrl) {
     }
   });
 }
+
+const stopScanning = async () => {
+  await BarcodeScanner.showBackground();
+  await BarcodeScanner.stopScan();
+  document.body.style.background = "black";
+  handleBackButton("/")
+};
 
 async function signup(data) {
   try {
@@ -38,4 +76,4 @@ async function signup(data) {
   }
 }
 
-export { handleBackButton, signup };
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning };

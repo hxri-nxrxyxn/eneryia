@@ -1,26 +1,35 @@
 <script>
-    import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+  import { checkPermission, startScanning, stopScanning } from "../script";
+  import { App } from "@capacitor/app";
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-    let photoUrl = "";
+  let photoUrl = "";
 
-    async function takePhoto() {
-        try {
-            const image = await Camera.getPhoto({
-                quality: 90,
-                source: CameraSource.Camera, // Use "CameraSource.Photos" for gallery
-                resultType: CameraResultType.Base64, // "Uri" returns the image URL
-            });
+  App.addListener("backButton", () => {
+    stopScanning();
+  });
 
-            alert(image.base64String);
-        } catch (error) {
-            alert(error);
-        }
+  checkPermission();
+
+  async function takePhoto() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        source: CameraSource.Camera, // Use "CameraSource.Photos" for gallery
+        resultType: CameraResultType.Base64, // "Uri" returns the image URL
+      });
+
+      alert(image.base64String);
+    } catch (error) {
+      alert(error);
     }
+  }
 </script>
 
 <main>
-    <button onclick={takePhoto}>lick me</button>
+  <button onclick={takePhoto}>click me</button>
+  <button onclick={startScanning}>Bar Code</button>
 </main>
 
 <style></style>
