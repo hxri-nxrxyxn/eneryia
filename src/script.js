@@ -38,4 +38,4 @@ async function signup(data) {
     }
 }
 
-export { handleBackButton };  
+export { handleBackButton , signup};  
