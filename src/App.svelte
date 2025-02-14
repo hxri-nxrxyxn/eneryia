@@ -6,6 +6,7 @@
     import Collect from "./components/Collect.svelte";
     import Terms from "./components/Terms.svelte";
     import Dashboard from "./components/Dashboard.svelte";
+    import Recipe from "./components/Recipe.svelte";
 </script>
 
 <main>
@@ -16,6 +17,7 @@
         <Route path="/collect" component={Collect} />
         <Route path="/terms" component={Terms} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/recipe" component={Recipe} />
     </Router>
 </main>
 
