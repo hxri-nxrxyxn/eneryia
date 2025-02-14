@@ -28,10 +28,17 @@ p {
 }
 
 :root {
-    --color-primary: #6c5ce7;
-    --color-primary-light: #a29bfe;
+    --color-primary: #1919ff;
+    --color-primary-light: #7878fa;
     --color-light: #dfe6e955;
     --color-text: #2d343699;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 h1 {
@@ -54,9 +61,18 @@ h5 {
 button {
     width: 100%;
     background: var(--color-primary);
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    border: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: white;
+    margin-top: 1rem;
 }
 
 button.outline {
     background: white;
     border: 2px solid var(--color-primary);
+    color: var(--color-primary);
 }
