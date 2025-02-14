@@ -14,21 +14,26 @@
         </h1>
         <div class="form">
             <div class="form__line">
-                <label>email</label>
-                <input type="text" placeholder="Email" />
+                <label>name</label>
+                <input type="text" placeholder="Rani" />
             </div>
             <div class="form__line">
-                <label>password</label>
-                <input type="password" placeholder="Password" required />
+                <label>food preference</label>
+                <input type="text" placeholder="Vegetarian" />
+            </div>
+            <div class="form__line">
+                <label>Calorie Intake</label>
+                <input type="text" placeholder="in mg" required />
+            </div>
+            <div class="form__line">
+                <label>Meals per day</label>
+                <input type="text" placeholder="3" required />
             </div>
         </div>
     </div>
     <div class="buttons">
-        <Link to="/dashboard">
-            <button>Login</button>
-        </Link>
-        <Link to="/signup">
-            <button class="outline">Signup</button>
+        <Link to="/terms">
+            <button>Continue</button>
         </Link>
     </div>
 </main>
