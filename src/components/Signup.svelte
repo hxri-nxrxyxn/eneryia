@@ -8,7 +8,7 @@
 <main>
     <div class="contents">
         <h1>
-            <span>Introducing</span>
+            <span>Sign up for</span>
             Savr
         </h1>
         <div class="form">
@@ -18,16 +18,16 @@
             </div>
             <div class="form__line">
                 <label>password</label>
-                <input type="password" placeholder="Password" required />
+                <input type="text" placeholder="Email" />
             </div>
         </div>
     </div>
     <div class="buttons">
-        <Link to="/dashboard">
-            <button>Login</button>
+        <Link to="/">
+            <button>Continue</button>
         </Link>
-        <Link to="/signup">
-            <button class="outline">Signup</button>
+        <Link to="/scan">
+            <button class="outline">Scan</button>
         </Link>
     </div>
 </main>
