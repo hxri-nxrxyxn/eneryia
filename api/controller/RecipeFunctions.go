@@ -9,7 +9,7 @@ import (
 )
 
 type RecID struct {
-	RecipeID uint `json:"rec"`
+	RecipeID uint `json:"recid"`
 }
 
 func CreateRecipe(db *gorm.DB) func(*fiber.Ctx) error {

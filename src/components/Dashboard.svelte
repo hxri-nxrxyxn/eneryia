@@ -5,8 +5,13 @@
   import Hourglass from "../assets/hourglass-end.svg";
   import Smile from "../assets/grin-alt.svg";
   import Muscle from "../assets/muscle.svg";
-  import { checkUser } from "../script";
-  checkUser();
+  import { checkUser, getRecipies } from "../script";
+  const doCheck = async () => {
+    const data = await checkUser();
+    getRecipies(data.recid);
+  };
+
+  doCheck();
 </script>
 
 <main>

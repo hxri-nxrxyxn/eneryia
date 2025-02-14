@@ -34,6 +34,7 @@ func main() {
 
 	routes.UserRoutes(db, app)
 	routes.IngredientRoutes(db, app)
+	routes.RecipeRoutes(db, app)
 
 	app.Listen(":8080")
 }

@@ -201,4 +201,31 @@ catch(error) {
 }
 }
 
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect };
+async function getRecipies(recid) {
+  const recipies = recid.map(rec => {
+    return fetch(`${baseUrl}/recipe/${rec}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  })
+  const res = await Promise.all(recipies);
+  const data = await Promise.all(res.map(r => r.json()));
+  console.log(data);
+}
+
+async function getIngredients(ingid) {
+  const ingredients = ingid.map(ing => {
+    return fetch(`${baseUrl}/ingredient/${ing}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  })
+  const res = await Promise.all(ingredients);
+  const data = await Promise.all(res.map(r => r.json()));
+  console.log(data);
+}
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients };
