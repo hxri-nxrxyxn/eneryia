@@ -120,9 +120,18 @@ func CreateUser(db *gorm.DB) func(*fiber.Ctx) error {
 			})
 		}
 
+		token, err := GenerateJWT(user)
+		if err != nil {
+			return c.Status(502).JSON(fiber.Map{
+				"message": "Could not generate token",
+				"error":   err.Error(),
+			})
+		}
+
 		return c.Status(201).JSON(fiber.Map{
 			"message": "User created",
 			"data":    user,
+			"token":   token,
 		})
 	}
 }
