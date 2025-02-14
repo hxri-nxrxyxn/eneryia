@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "and" : "npm run build && npx cap sync && npx cap run android",
+    "and": "npm run build && npx cap sync && npx cap run android",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -20,6 +20,7 @@
     "@capacitor/app": "^7.0.0",
     "@capacitor/camera": "^7.0.0",
     "@capacitor/core": "^7.0.1",
+    "@capacitor/status-bar": "^7.0.0",
     "svelte-routing": "^2.13.0"
   }
 }
