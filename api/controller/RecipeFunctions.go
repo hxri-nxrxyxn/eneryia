@@ -8,15 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type IngID struct {
-	IngredientID uint `json:"ingid"`
+type RecID struct {
+	RecipeID uint `json:"rec"`
 }
 
-func CreateIngredient(db *gorm.DB) func(*fiber.Ctx) error {
+func CreateRecipe(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		ingredient := new(models.Ingredient)
+		recipe := new(models.Recipe)
 
-		err := c.BodyParser(ingredient)
+		err := c.BodyParser(recipe)
 		if err != nil {
 			return c.Status(400).JSON(fiber.Map{
 				"message": "Could not parse Body",
@@ -24,68 +24,49 @@ func CreateIngredient(db *gorm.DB) func(*fiber.Ctx) error {
 			})
 		}
 
-		err = db.Create(ingredient).Error
+		err = db.Create(recipe).Error
 		if err != nil {
 
 			return c.Status(501).JSON(fiber.Map{
-				"message": "Could not create ingredient",
+				"message": "Could not create recipe",
 				"error":   err.Error(),
 			})
 		}
 
 		return c.Status(201).JSON(fiber.Map{
 			"message": "Recipe created",
-			"data":    ingredient,
+			"data":    recipe,
 		})
 	}
 }
 
-func GetIngredient(db *gorm.DB) func(*fiber.Ctx) error {
+func GetRecipe(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
 
-		ingredient := new(models.Ingredient)
-		err := db.Where("ingredient_id = ?", id).First(ingredient).Error
+		recipe := new(models.Recipe)
+		err := db.Where("recipe_id = ?", id).First(recipe).Error
 		if err != nil {
 			if strings.Contains(err.Error(), "record not found") {
 				return c.Status(404).JSON(fiber.Map{
-					"message": "Ingredient not found",
+					"message": "Recipe not found",
 				})
 			}
 
 			return c.Status(500).JSON(fiber.Map{
-				"message": "Could not retrieve Ingredient",
+				"message": "Could not retrieve Recipe",
 				"error":   err.Error(),
 			})
 		}
 
 		return c.Status(200).JSON(fiber.Map{
-			"message": "Retrieved Recipe",
-			"data":    ingredient,
+			"message": "Retrieved recipe",
+			"data":    recipe,
 		})
 	}
 }
 
-func GetIngredients(db *gorm.DB) fiber.Handler {
-	return func(c *fiber.Ctx) error {
-		ingredients := new([]models.Ingredient)
-
-		err := db.Find(ingredients).Error
-		if err != nil {
-			return c.Status(500).JSON(fiber.Map{
-				"message": "Could not retrieve ingredients",
-				"error":   err.Error(),
-			})
-		}
-
-		return c.Status(200).JSON(fiber.Map{
-			"message": "Retrieved ingredients",
-			"data":    ingredients,
-		})
-	}
-}
-
-func AddIngredient(db *gorm.DB) func(*fiber.Ctx) error {
+func AddRecipe(db *gorm.DB) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
 
@@ -104,8 +85,8 @@ func AddIngredient(db *gorm.DB) func(*fiber.Ctx) error {
 			})
 		}
 
-		ingid := new(IngID)
-		err = c.BodyParser(ingid)
+		recid := new(RecID)
+		err = c.BodyParser(recid)
 		if err != nil {
 			return c.Status(400).JSON(fiber.Map{
 				"message": "Could not parse Body",
@@ -113,7 +94,7 @@ func AddIngredient(db *gorm.DB) func(*fiber.Ctx) error {
 			})
 		}
 
-		user.IngID = append(user.IngID, int64(ingid.IngredientID))
+		user.RecID = append(user.RecID, int64(recid.RecipeID))
 
 		err = db.Save(user).Error
 		if err != nil {
