@@ -27,9 +27,9 @@ func VerifyUser(db *gorm.DB) func(*fiber.Ctx) error {
 
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, errors.New("invalid token")
+				return nil, errors.New("invalid token Here")
 			}
-			return []byte(os.Getenv("JWT_SECRET")), nil
+			return []byte(os.Getenv("SECRET_KEY")), nil
 		})
 
 		if err != nil || !token.Valid {
