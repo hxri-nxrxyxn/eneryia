@@ -75,6 +75,7 @@ button {
     font-size: 0.75rem;
     color: black;
     margin-top: 1rem;
+    box-shadow: 5px 0px 5px #111;
 }
 
 button.outline {
