@@ -1,7 +1,7 @@
 import { App } from '@capacitor/app';
 import { navigate } from "svelte-routing";
 
-const baseUrl = "https://api.laddu.cc:8080";
+const baseUrl = "https://api.laddu.cc";
 
 function handleBackButton(fallbackUrl) {
     sessionStorage.setItem("fallbackPage", fallbackUrl);
