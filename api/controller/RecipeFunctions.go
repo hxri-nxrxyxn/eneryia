@@ -60,8 +60,7 @@ func GetRecipe(db *gorm.DB) func(*fiber.Ctx) error {
 		}
 
 		return c.Status(200).JSON(fiber.Map{
-			"message": "Retrieved recipe",
-			"data":    recipe,
+			"data": recipe,
 		})
 	}
 }

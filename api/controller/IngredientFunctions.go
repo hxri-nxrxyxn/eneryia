@@ -79,8 +79,7 @@ func GetIngredients(db *gorm.DB) fiber.Handler {
 		}
 
 		return c.Status(200).JSON(fiber.Map{
-			"message": "Retrieved ingredients",
-			"data":    ingredients,
+			"data": ingredients,
 		})
 	}
 }
