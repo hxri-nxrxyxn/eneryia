@@ -10,18 +10,16 @@
             <span>Introducing</span>
             Savr
         </h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
-            facere similique eaque tempore modi, fugiat ad nemo porro. Fugiat
-            nostrum possimus, quas beatae tenetur incidunt? Consequuntur harum
-            doloremque ut optio esse, soluta odit, ab nobis tenetur delectus
-            aliquam quaerat molestiae dolorem. Obcaecati mollitia molestiae ad
-            maxime ullam debitis accusantium itaque explicabo, fugit aspernatur
-            alias nulla atque dolorem sunt laborum corrupti ipsam temporibus
-            odit porro. Voluptates iure animi excepturi odio, quos magnam qui
-            recusandae ut minima nam non nulla cupiditate consectetur quasi ipsa
-            esse inventore temporibus error harum quia praesentium molestias.
-        </p>
+        <div class="form">
+            <div class="form__line">
+                <label>email</label>
+                <input type="text" placeholder="Email" />
+            </div>
+            <div class="form__line">
+                <label>password</label>
+                <input type="text" placeholder="Email" />
+            </div>
+        </div>
     </div>
     <div class="buttons">
         <Link to="/login">
