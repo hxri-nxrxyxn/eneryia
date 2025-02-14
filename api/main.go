@@ -16,7 +16,6 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 		AllowMethods: "*",
-		AllowHeaders: "Content-Type,Authorization",
 	}))
 
 	db, err := database.NewConnection()

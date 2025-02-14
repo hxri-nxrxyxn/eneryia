@@ -81,13 +81,47 @@ async function signup(data) {
       return;
     }
     await setToken(res.token);
-    alert(res.token);
     navigate("/collect", { replace: true });
   } catch (error) {
     console.log(error);
   }
 }
 
+async function checkUser() {
+  const {value} = await Storage.get({ key : "token"});
+  console.log(value)
+  if (!value) {
+    navigate("/signup", { replace: true });
+    return;
+  }
+  const response = await fetch(`${baseUrl}/verify`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${value}`,
+    },
+  });
+  const res = await response.json();
+  if (!response.ok) {
+    alert(res.message);
+    navigate("/signup", { replace: true });
+    return;
+  }
+  const id = res.id;
+  const response2 = await fetch(`${baseUrl}/users/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res2 = await response2.json();
+  if (!response2.ok) {
+    alert(res2.message);
+    return;
+  }
+  return res2.data;
+}
 
 
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning };
+
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser };
