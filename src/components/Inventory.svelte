@@ -1,10 +1,10 @@
 <script>
     window.scrollTo({ top: 0, behavior: "smooth" });
     import { Link } from "svelte-routing";
-    import Nav from "./Nav.svelte";
+    import NavBot from "./NavBot.svelte";
 </script>
 
-<Nav />
+<NavBot selection="Fridge" />
 <main>
     <div class="contents">
         <h1>
@@ -30,11 +30,6 @@
                 <p>Expire <b>0D</b></p>
             </div>
         </div>
-    </div>
-    <div class="buttons">
-        <Link to="/dashboard">
-            <button>send reminder</button>
-        </Link>
     </div>
 </main>
 
