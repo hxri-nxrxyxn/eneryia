@@ -2,7 +2,8 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     import { Link } from "svelte-routing";
     import NavBot from "./NavBot.svelte";
-    //https://teachablemachine.withgoogle.com/models/DONTRJT1W/
+    import { checkUser } from "../script";
+    checkUser();
 </script>
 
 <NavBot selection="Fridge" />
