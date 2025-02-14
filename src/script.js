@@ -122,6 +122,13 @@ async function checkUser() {
   return res2.data;
 }
 
+async function logout() {
+  try {
+    await Storage.remove({ key: "token" });
+    location.href = "/login";
+} catch (error) {
+    console.error("Error:", error);
+}
+}
 
-
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser };
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout };
