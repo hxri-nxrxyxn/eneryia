@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/savr/database"
+	"github.com/savr/models"
 )
 
 func main() {
@@ -25,6 +26,8 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
+
+	models.MigrateUser(db)
 
 	app.Listen(":8080")
 }
