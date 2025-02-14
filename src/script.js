@@ -1,6 +1,17 @@
 import { App } from "@capacitor/app";
 import { navigate } from "svelte-routing";
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { Storage } from "@capacitor/storage";
+
+const baseUrl = "https://api.laddu.cc/api/v1";
+
+async function setToken(token) {
+  await Storage.set({
+    key: "token",
+    value: token,
+  })
+}
+
 
 const checkPermission = async () => {
   const status = await BarcodeScanner.checkPermission({ force: true });
@@ -32,7 +43,6 @@ const startScanning = async () => {
   }
 };
 
-const baseUrl = "https://api.laddu.cc/api/v1";
 
 function handleBackButton(fallbackUrl) {
   sessionStorage.setItem("fallbackPage", fallbackUrl);
@@ -67,13 +77,17 @@ async function signup(data) {
     });
     const res = await response.json();
     if (!response.ok) {
-      console.log(res);
+      alert(res.message);
       return;
     }
+    await setToken(res.token);
+    alert(res.token);
     navigate("/collect", { replace: true });
   } catch (error) {
     console.log(error);
   }
 }
+
+
 
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning };
