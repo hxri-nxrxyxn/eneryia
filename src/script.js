@@ -32,7 +32,7 @@ async function signup(data) {
       console.log(res);
       return;
     }
-    navigate("/dashboard", { replace: true });
+    navigate("/collect", { replace: true });
   } catch (error) {
     console.log(error);
   }
