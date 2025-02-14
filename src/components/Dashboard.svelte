@@ -1,20 +1,19 @@
 <script>
     window.scrollTo({ top: 0, behavior: "smooth" });
-    import { Link } from "svelte-routing";
-    import Nav from "./Nav.svelte";
+    import NavBot from "./NavBot.svelte";
     import Stopwatch from "../assets/stopwatch.svg";
     import Hourglass from "../assets/hourglass-end.svg";
     import Smile from "../assets/grin-alt.svg";
     import Muscle from "../assets/muscle.svg";
 </script>
 
-<Nav />
+<NavBot />
 <main>
     <div class="contents">
         <h1>
             <span>Your</span>
             <br />
-            Inventory
+            Recipies
         </h1>
 
         <div class="featured">
@@ -42,7 +41,7 @@
         <div class="suggested">
             <h2>Suggested</h2>
             <div class="card">
-                <div class="card__banner">hey</div>
+                <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
                         <h3>Pineapple Curry</h3>
@@ -60,7 +59,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card__banner">hey</div>
+                <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
                         <h3>Pineapple Curry</h3>
@@ -85,6 +84,9 @@
     h2 {
         margin: 2rem 0;
     }
+    .featured .card {
+        border: 2px solid var(--color-primary);
+    }
     .card {
         display: flex;
         flex-direction: column;
@@ -104,6 +106,8 @@
             url("../assets/paneer.jpg");
         background-size: cover;
         background-position: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         height: 20vh;
     }
     .card h3 {
