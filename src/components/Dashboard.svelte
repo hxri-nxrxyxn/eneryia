@@ -7,7 +7,6 @@
     import Muscle from "../assets/muscle.svg";
 </script>
 
-<NavBot />
 <main>
     <div class="contents">
         <h1>
@@ -79,6 +78,7 @@
         </div>
     </div>
 </main>
+<NavBot selection="Home" />
 
 <style>
     h2 {
