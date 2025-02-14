@@ -20,7 +20,7 @@
         <div class="featured">
             <h2>Featured</h2>
             <div class="card">
-                <div class="card__banner">hey</div>
+                <div class="card__banner"></div>
                 <div class="card__details">
                     <div class="card__top">
                         <h3>Pineapple Curry</h3>
@@ -92,13 +92,18 @@
         background: #111;
         border-radius: 10px;
         margin: 1rem 0;
+        margin-bottom: 3rem;
         justify-content: space-between;
     }
     .card__details {
         padding: 1rem;
     }
     .card__banner {
-        background-color: var(--color-primary);
+        background:
+            linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url("../assets/paneer.jpg");
+        background-size: cover;
+        background-position: center;
         height: 20vh;
     }
     .card h3 {

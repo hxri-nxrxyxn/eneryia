@@ -15,7 +15,7 @@
         <div class="form">
             <div class="form__line">
                 <label>name</label>
-                <input type="text" placeholder="Rani" />
+                <input type="text" placeholder="Neona Sebastian" />
             </div>
             <div class="form__line">
                 <label>food preference</label>
