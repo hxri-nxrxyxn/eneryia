@@ -6,6 +6,7 @@
     startScanning,
     stopScanning,
     logout,
+    checkUser,
   } from "../script";
   import { App } from "@capacitor/app";
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -16,7 +17,7 @@
     stopScanning();
   });
 
-  checkPermission();
+  checkUser();
 
   async function takePhoto() {
     try {

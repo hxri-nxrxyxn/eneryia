@@ -153,4 +153,52 @@ async function login(data) {
   }
 }
 
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login };
+async function collect(data) {
+try{
+
+  const user = await checkUser();
+  if (!user) {
+    return;
+  }
+
+  const id = user.id;
+
+  const response = await fetch(`${baseUrl}/users/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await response.json();
+  if (!response.ok) {
+    alert(res.message);
+    return;
+  }
+  res.data.name = data.name
+  res.data.intake = Number(data.intake)
+  res.data.preference = data.preference
+  res.data.mpd = Number(data.mpd)
+
+  console.log(res.data)
+
+  const response2 = await fetch(`${baseUrl}/users/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(res.data),
+  });
+  const res2 = await response2.json();
+  if (!response2.ok) {
+    alert(res2.message);
+    return;
+  }
+  console.log(res2)
+  navigate("/dashboard", { replace: true });
+}
+catch(error) {
+  console.log(error);
+}
+}
+
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect };
