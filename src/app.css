@@ -39,7 +39,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
 }
 
 h1 {
@@ -61,6 +60,9 @@ h5 {
 }
 .buttons {
     padding: 2rem 0;
+    position: absolute;
+    bottom: 0;
+    width: calc(100vw - 4rem);
 }
 button {
     width: 100%;
@@ -97,7 +99,7 @@ button.outline {
     outline: 0;
     border-radius: 10px;
     font-size: 0.75rem;
-    background-color: transparent;
+    background-color: #111;
     color: white;
 }
 

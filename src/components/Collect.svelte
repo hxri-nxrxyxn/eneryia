@@ -8,8 +8,9 @@
 <main>
     <div class="contents">
         <h1>
-            <span>Introducing</span>
-            Savr
+            <span>Tell us your</span>
+            <br />
+            Preferences
         </h1>
         <div class="form">
             <div class="form__line">
