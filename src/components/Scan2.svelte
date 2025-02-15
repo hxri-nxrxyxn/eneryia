@@ -24,7 +24,7 @@
             <br />
             Inventory
         </h1>
-        <h3>Input by</h3>
+        <h3>Options</h3>
         <div class="grid">
             <div class="grid__row">
                 <Link to="/keyboard">
