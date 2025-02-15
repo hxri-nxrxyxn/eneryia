@@ -11,9 +11,8 @@ async function setToken(token) {
   await Storage.set({
     key: "token",
     value: token,
-  })
+  });
 }
-
 
 const checkPermission = async () => {
   const status = await BarcodeScanner.checkPermission({ force: true });
@@ -31,23 +30,24 @@ const checkPermission = async () => {
 };
 
 const startScanning = async () => {
-
   BarcodeScanner.hideBackground();
   document.body.style.background = "transparent";
   const result = await BarcodeScanner.startScan();
   document.body.style.background = "black";
 
-
   if (result.hasContent) {
     const code = result.content;
-    const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `https://world.openfoodfacts.org/api/v0/product/${code}.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
     const res = await response.json();
-    if(!res.product.product_name) {
+    if (!res.product.product_name) {
       alert("Product not found");
       return;
     }
@@ -57,7 +57,6 @@ const startScanning = async () => {
     console.log("No content scanned");
   }
 };
-
 
 function handleBackButton(fallbackUrl) {
   sessionStorage.setItem("fallbackPage", fallbackUrl);
@@ -77,12 +76,12 @@ const stopScanning = async () => {
   await BarcodeScanner.showBackground();
   await BarcodeScanner.stopScan();
   document.body.style.background = "black";
-  handleBackButton("/")
+  handleBackButton("/");
 };
 
 async function signup(data) {
   try {
-    console.log(data)
+    console.log(data);
     const response = await fetch(`${baseUrl}/register`, {
       method: "POST",
       headers: {
@@ -103,8 +102,8 @@ async function signup(data) {
 }
 
 async function checkUser() {
-  const {value} = await Storage.get({ key : "token"});
-  console.log(value)
+  const { value } = await Storage.get({ key: "token" });
+  console.log(value);
   if (!value) {
     navigate("/login", { replace: true });
     return;
@@ -113,7 +112,7 @@ async function checkUser() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${value}`,
+      Authorization: `Bearer ${value}`,
     },
   });
   const res = await response.json();
@@ -141,14 +140,14 @@ async function logout() {
   try {
     await Storage.remove({ key: "token" });
     location.href = "/login";
-} catch (error) {
+  } catch (error) {
     console.error("Error:", error);
-}
+  }
 }
 
 async function login(data) {
   try {
-    console.log(data)
+    console.log(data);
     const response = await fetch(`${baseUrl}/login`, {
       method: "POST",
       headers: {
@@ -169,80 +168,79 @@ async function login(data) {
 }
 
 async function collect(data) {
-try{
+  try {
+    const user = await checkUser();
+    if (!user) {
+      return;
+    }
 
-  const user = await checkUser();
-  if (!user) {
-    return;
+    const id = user.id;
+
+    const response = await fetch(`${baseUrl}/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    if (!response.ok) {
+      alert(res.message);
+      return;
+    }
+    res.data.name = data.name;
+    res.data.intake = Number(data.intake);
+    res.data.preference = data.preference;
+    res.data.mpd = Number(data.mpd);
+
+    navigate("/scan", { replace: true });
+    console.log(res.data);
+
+    const response2 = await fetch(`${baseUrl}/users/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(res.data),
+    });
+    const res2 = await response2.json();
+    if (!response2.ok) {
+      alert(res2.message);
+      return;
+    }
+    console.log(res2);
+    navigate("/dashboard", { replace: true });
+  } catch (error) {
+    console.log(error);
   }
-
-  const id = user.id;
-
-  const response = await fetch(`${baseUrl}/users/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const res = await response.json();
-  if (!response.ok) {
-    alert(res.message);
-    return;
-  }
-  res.data.name = data.name
-  res.data.intake = Number(data.intake)
-  res.data.preference = data.preference
-  res.data.mpd = Number(data.mpd)
-
-  console.log(res.data)
-
-  const response2 = await fetch(`${baseUrl}/users/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(res.data),
-  });
-  const res2 = await response2.json();
-  if (!response2.ok) {
-    alert(res2.message);
-    return;
-  }
-  console.log(res2)
-  navigate("/dashboard", { replace: true });
-}
-catch(error) {
-  console.log(error);
-}
 }
 
 async function getRecipies(recid) {
-  const recipies = recid.map(rec => {
+  const recipies = recid.map((rec) => {
     return fetch(`${baseUrl}/recipe/${rec}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-  })
+  });
   const res = await Promise.all(recipies);
-  const data = await Promise.all(res.map(r => r.json()));
-  const redata = data.map(d => d.data);
+  const data = await Promise.all(res.map((r) => r.json()));
+  const redata = data.map((d) => d.data);
   return redata;
 }
 
 async function getIngredients(ingid) {
-  const ingredients = ingid.map(ing => {
+  const ingredients = ingid.map((ing) => {
     return fetch(`${baseUrl}/ingredient/${ing}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-  })
+  });
   const res = await Promise.all(ingredients);
-  const data = await Promise.all(res.map(r => r.json()));
-  const redata = data.map(d => d.data);
+  const data = await Promise.all(res.map((r) => r.json()));
+  const redata = data.map((d) => d.data);
   return redata;
 }
 

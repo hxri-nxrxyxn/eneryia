@@ -26,6 +26,8 @@
         const options = { year: "numeric", month: "long", day: "numeric" };
         return date.toLocaleDateString(undefined, options); // Uses user's locale
     }
+
+    import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 </script>
 
 <Nav />
