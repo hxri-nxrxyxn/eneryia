@@ -13,6 +13,7 @@
     import Keyboard from "../assets/keyboard.svg";
     import Eye from "../assets/vision-target.svg";
     import Barcode from "../assets/qr-scan.svg";
+    import Logout from "../assets/sign-out-alt-2.svg";
 </script>
 
 <NavBot selection="Plus" />
@@ -47,6 +48,7 @@
                     </div>
                 </Link>
                 <div class="grid__column red" onclick={logout}>
+                    <img src={Logout} alt="" />
                     <h5>Logout</h5>
                 </div>
             </div>
@@ -91,5 +93,7 @@
     }
     .red {
         background: red;
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(206deg)
+            brightness(104%) contrast(102%);
     }
 </style>
