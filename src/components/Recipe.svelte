@@ -16,27 +16,16 @@
     const getdata = async () => {
         const data = await getRecipe(id);
         console.log(data);
+        document.getElementById("name").textContent = data.name;
+        document.getElementById("cookingTime").textContent = data.cooking_time;
+        document.getElementById("happy").textContent = data.happy;
+        document.getElementById("calories").textContent = data.calories;
+        document.getElementById("instructions").textContent = data.instruction;
     };
     getdata();
 
     // Sample JSON data (replace with your actual data fetching)
-    let recipeData = {
-        data: {
-            calories: 200,
-            expiry_date: "2024-04-20", // Example date format
-            id: 1,
-            name: "butter",
-            quantity: 5,
-        },
-        message: "Retrieved Recipe",
-    };
-
     // Function to format the expiry date (customize as needed)
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const options = { year: "numeric", month: "long", day: "numeric" };
-        return date.toLocaleDateString(undefined, options); // Uses user's locale
-    }
 
     import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 </script>
@@ -49,62 +38,37 @@
             <br />
             Recipe
         </h1>
-        <h3>Pineapple Curry</h3>
+        <h3 id="name"></h3>
         <div class="recipe">
             <img class="recipe__banner" src={Image} alt="banner" />
             <div class="recipe__details">
                 <div class="recipe__details__row">
                     <div class="recipe__detail">
                         <h5>Ingredients Expiring in</h5>
-                        {#if recipeData.data.expiry_date}
-                            <p>
-                                <img src={Hourglass} alt="icon" />
-                                <b>{formatDate(recipeData.data.expiry_date)}</b>
-                            </p>
-                        {:else}
-                            <p><img src={Hourglass} alt="icon" /> <b>N/A</b></p>
-                        {/if}
+                        <p>
+                            <img src={Hourglass} alt="icon" />
+                            <b id="cookingTime"></b>
+                        </p>
                     </div>
                     <div class="recipe__detail">
-                        <h5>Can be cooked in</h5>
-                        <p>
-                            <img src={Stopwatch} alt="icon" /> <b>20 Min</b>
-                        </p>
+                        <h5>Happyness Index</h5>
+                        <p><img src={Smile} alt="icon" /> <b id="happy"></b></p>
                     </div>
                 </div>
                 <div class="recipe__details__row">
                     <div class="recipe__detail">
-                        <h5>Happyness Index</h5>
-                        <p><img src={Smile} alt="icon" /> <b>2D</b></p>
-                    </div>
-                    <div class="recipe__detail">
                         <h5>Calorie Count</h5>
-                        {#if recipeData.data.calories}
-                            <p>
-                                <img src={Muscle} alt="icon" />
-                                <b>{recipeData.data.calories}</b>
-                            </p>
-                        {:else}
-                            <p><img src={Muscle} alt="icon" /> <b>N/A</b></p>
-                        {/if}
+                        <p>
+                            <img src={Muscle} alt="icon" />
+                            <b id="calories"></b>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
         <br />
         <h3>Recipe</h3>
-        <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis enim
-            sunt praesentium iure amet voluptatum cumque ut officia maiores
-            pariatur! Obcaecati quisquam odit enim nesciunt quia. Ad provident
-            repudiandae, rem ullam iure iste aut assumenda. <br /><br />Maxime
-            dolorem dolore beatae incidunt distinctio tenetur assumenda, qui
-            asperiores nam excepturi reiciendis voluptatum quae minima officiis
-            amet totam dicta sequi illo, voluptatibus soluta consectetur
-            blanditiis sapiente voluptate in! Cupiditate fugiat vel odit
-            officiis magni, minus voluptas, vitae dicta illum enim ex excepturi
-            quidem? Ex dolore aut tempore quos id! Odit architecto a ab commodi!
-        </p>
+        <p id="instructions"></p>
     </div>
     <div class="buttons">
         <Link to="/dashboard">
