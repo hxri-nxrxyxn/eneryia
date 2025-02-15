@@ -383,11 +383,55 @@ async function generteRecipe() {
 }});
   const prompt = `${text} these are the ingredients which are nearing expiry genrate me in json all the recipies that can be made with it in this format {name,instruction,cooking_time,happy,calories,ingid } where instruction is cooking instruction for recipe, happy is the satisfaction score for the recipe, ingid is the id of the ingredients used in the recipe`;
   console.log(prompt)
-const result2 = await model.generateContent(prompt);
+  const result2 = await model.generateContent(prompt);
   const output = result2.response.text()
   const out = JSON.parse(output)
 console.log(out)
-} 
+const arr = out.map(async(d) => {
+  const response = await fetch(`${baseUrl}/recipe`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name : d.name,
+      instruction : d.instruction,
+      cooking_time : Number(d.cooking_time),
+      happy : d.happy,
+      calories : d.calories,
+      ingid : d.ingid
+    }),
+  });
+  const res = await response.json();
+  if(!response.ok) {
+    alert(res.message)
+  }
+  console.log(res)
+
+  const userdata = await checkUser();
+    const userid = userdata.id
+    const id = res.data.id;
+    const response3 = await fetch(`${baseUrl}/recipe/${userid}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recid : id,
+      }),
+    });
+
+    const res3 = await response3.json();
+    if(!response3.ok){
+      alert(res3.message)
+      return
+    }
+    console.log(res3)
+    
+    alert("Product added")
+    return
+} )
+}
 
 
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI, generteRecipe };
