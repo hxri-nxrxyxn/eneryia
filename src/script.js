@@ -225,7 +225,8 @@ async function getRecipies(recid) {
   })
   const res = await Promise.all(recipies);
   const data = await Promise.all(res.map(r => r.json()));
-  console.log(data);
+  const redata = data.map(d => d.data);
+  return redata;
 }
 
 async function getIngredients(ingid) {
