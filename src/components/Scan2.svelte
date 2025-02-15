@@ -1,7 +1,12 @@
 <script>
     import NavBot from "./NavBot.svelte";
     import { Link } from "svelte-routing";
-    import { checkPermission, logout, checkUser } from "../script";
+    import {
+        generteRecipe,
+        checkPermission,
+        logout,
+        checkUser,
+    } from "../script";
     window.scrollTo({ top: 0, behavior: "smooth" });
     checkUser();
 
@@ -41,6 +46,15 @@
                         <h5>Scan</h5>
                     </div>
                 </Link>
+                <div class="grid__column red" onclick={logout}>
+                    <h5>Logout</h5>
+                </div>
+            </div>
+            <div class="grid__row">
+                <div class="grid__column green" onclick={generteRecipe}>
+                    <img src={Barcode} alt="" />
+                    <h5>Generate Responses</h5>
+                </div>
             </div>
         </div>
     </div>
@@ -74,5 +88,8 @@
         width: 2rem;
         filter: invert(79%) sepia(55%) saturate(515%) hue-rotate(53deg)
             brightness(90%) contrast(79%);
+    }
+    .red {
+        background: red;
     }
 </style>
