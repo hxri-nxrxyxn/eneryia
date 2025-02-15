@@ -2,6 +2,22 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     import { Link } from "svelte-routing";
     import NavBot from "./NavBot.svelte";
+    import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+    import { checkUser, runAI } from "../script";
+    checkUser();
+    async function takePhoto() {
+        try {
+            const image = await Camera.getPhoto({
+                quality: 90,
+                source: CameraSource.Camera, // Use "CameraSource.Photos" for gallery
+                resultType: CameraResultType.Base64, // "Uri" returns the image URL
+            });
+
+            await runAI(image.base64String);
+        } catch (error) {
+            alert(error);
+        }
+    }
 </script>
 
 <NavBot />
@@ -13,7 +29,7 @@
             Inventory
         </h1>
         hey
-        <button>LAUNCH CAMERA</button>
+        <button onclick={takePhoto}>LAUNCH CAMERA</button>
     </div>
 </main>
 
