@@ -239,6 +239,7 @@ async function getIngredients(ingid) {
   })
   const res = await Promise.all(ingredients);
   const data = await Promise.all(res.map(r => r.json()));
-  return data;
+  const redata = data.map(d => d.data);
+  return redata;
 }
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients };
