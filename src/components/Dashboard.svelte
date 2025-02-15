@@ -33,7 +33,7 @@
         <h1>
             <span>Your</span>
             <br />
-            Recipies
+            Recipes
         </h1>
 
         <div class="featured">
