@@ -434,4 +434,20 @@ const arr = out.map(async(d) => {
 }
 
 
-export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI, generteRecipe };
+async function getRecipe(id) {
+  const response = await fetch(`${baseUrl}/recipe/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await response.json();
+  if (!response.ok) {
+    alert(res.message);
+    return;
+  }
+  console.log(res.data);
+  return res.data;
+}
+
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI, generteRecipe, getRecipe };
