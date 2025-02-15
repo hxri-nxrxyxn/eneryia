@@ -316,4 +316,6 @@ catch(error) {
 }
 }
 
+
+
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI };
