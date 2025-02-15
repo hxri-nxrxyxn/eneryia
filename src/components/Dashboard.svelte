@@ -1,5 +1,6 @@
 <script>
     window.scrollTo({ top: 0, behavior: "smooth" });
+    import { Link } from "svelte-routing";
     import NavBot from "./NavBot.svelte";
     import Stopwatch from "../assets/stopwatch.svg";
     import Hourglass from "../assets/hourglass-end.svg";
@@ -38,40 +39,42 @@
         <div class="featured">
             <h2>Featured</h2>
             {#each recipes as recipe}
-                <div class="card">
-                    <div
-                        class="card__banner"
-                        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
-                            '../assets/paneer.jpg'}')"
-                    ></div>
-                    <div class="card__details">
-                        <div class="card__top">
-                            <h3>{recipe.name}</h3>
-                            <p>
-                                {recipe.instruction ||
-                                    "No instructions available"}
-                            </p>
-                        </div>
-                        <div class="card__bottom">
-                            <p>
-                                <img src={Stopwatch} alt="icon" />
-                                <b>{recipe.cooking_time || "N/A"}</b>
-                            </p>
-                            <p>
-                                <img src={Hourglass} alt="icon" />
-                                <b>{recipe.cooking_time || "N/A"}</b>
-                            </p>
-                            <p>
-                                <img src={Smile} alt="icon" />
-                                <b>{recipe.happy || "N/A"}</b>
-                            </p>
-                            <p>
-                                <img src={Muscle} alt="icon" />
-                                <b>{recipe.calories || "N/A"}</b>
-                            </p>
+                <Link to={`/recipe?id=${recipe.id}`}>
+                    <div class="card">
+                        <div
+                            class="card__banner"
+                            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
+                                '../assets/paneer.jpg'}')"
+                        ></div>
+                        <div class="card__details">
+                            <div class="card__top">
+                                <h3>{recipe.name}</h3>
+                                <p>
+                                    {recipe.instruction ||
+                                        "No instructions available"}
+                                </p>
+                            </div>
+                            <div class="card__bottom">
+                                <p>
+                                    <img src={Stopwatch} alt="icon" />
+                                    <b>{recipe.cooking_time || "N/A"}</b>
+                                </p>
+                                <p>
+                                    <img src={Hourglass} alt="icon" />
+                                    <b>{recipe.cooking_time || "N/A"}</b>
+                                </p>
+                                <p>
+                                    <img src={Smile} alt="icon" />
+                                    <b>{recipe.happy || "N/A"}</b>
+                                </p>
+                                <p>
+                                    <img src={Muscle} alt="icon" />
+                                    <b>{recipe.calories || "N/A"}</b>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Link>
             {:else}
                 <p>Loading recipes...</p>
             {/each}
