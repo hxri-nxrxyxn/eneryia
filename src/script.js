@@ -1,8 +1,10 @@
 import { App } from "@capacitor/app";
 import { navigate } from "svelte-routing";
-import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Storage } from "@capacitor/storage";
 
+const genAI = new GoogleGenerativeAI("AIzaSyCDUkLFDYk24JYdPgRWo-KfbAYzehtWpX0");
 const baseUrl = "https://api.laddu.cc/api/v1";
 
 async function setToken(token) {
@@ -241,6 +243,7 @@ async function getIngredients(ingid) {
   const redata = data.map((d) => d.data);
   return redata;
 }
+<<<<<<< HEAD
 export {
   handleBackButton,
   signup,
@@ -254,3 +257,23 @@ export {
   getRecipies,
   getIngredients,
 };
+=======
+
+async function runAI(base64) {
+  const prompt = "A plate of food with a variety of ingredients on it.";
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+  const imageParts = [
+    { inlineData: {
+      data: base64,
+      mimeType: "image/jpeg",},
+    },
+  ];
+
+  const generatedContent = await model.generateContent([prompt, ...imageParts]);
+
+  return generatedContent.response.text()
+}
+
+export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI };
+>>>>>>> 9e34ce45aa955248e50b05b19373c38e862296bd
