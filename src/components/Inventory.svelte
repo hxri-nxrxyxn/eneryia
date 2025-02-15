@@ -44,7 +44,7 @@
                 >
                     <h3>{ingredient.name}</h3>
                     <p>Quantity <b>{ingredient.quantity} Nos</b></p>
-                    <p>Expire <b>{ingredient.expiry_date}</b></p>
+                    <p>Expire <b>{ingredient.expiry}</b></p>
                 </div>
             {:else}
                 <p>Loading ingredients...</p>

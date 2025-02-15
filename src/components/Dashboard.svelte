@@ -41,11 +41,7 @@
             {#each recipes as recipe}
                 <Link to={`/recipe?id=${recipe.id}`}>
                     <div class="card">
-                        <div
-                            class="card__banner"
-                            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
-                                '../assets/paneer.jpg'}')"
-                        ></div>
+                        <div class="card__banner"></div>
                         <div class="card__details">
                             <div class="card__top">
                                 <h3>{recipe.name}</h3>
@@ -84,11 +80,7 @@
             <h2>Suggested</h2>
             {#each recipes as recipe}
                 <div class="card">
-                    <div
-                        class="card__banner"
-                        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
-                            '../assets/paneer.jpg'}')"
-                    ></div>
+                    <div class="card__banner"></div>
                     <div class="card__details">
                         <div class="card__top">
                             <h3>{recipe.name}</h3>
