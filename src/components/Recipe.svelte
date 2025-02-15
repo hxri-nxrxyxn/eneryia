@@ -8,6 +8,11 @@
     import Smile from "../assets/grin-alt.svg";
     import Muscle from "../assets/muscle.svg";
 
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    const id = params.get("id");
+    console.log(id);
+
     // Sample JSON data (replace with your actual data fetching)
     let recipeData = {
         data: {

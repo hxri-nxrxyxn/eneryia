@@ -20,18 +20,11 @@
             <br />
             Inventory
         </h1>
-        <div class="box"></div>
         <button onclick={startScanning}>SCAN</button>
     </div>
 </main>
 
 <style>
-    .box {
-        width: calc(100vw - 4rem);
-        height: calc(100vw - 4rem);
-        background: #111;
-        border-radius: 10px;
-    }
     h3 {
         margin-bottom: 1rem;
     }
