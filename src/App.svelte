@@ -8,6 +8,10 @@
     import Dashboard from "./components/Dashboard.svelte";
     import Recipe from "./components/Recipe.svelte";
     import Inventory from "./components/Inventory.svelte";
+    import Scan2 from "./components/Scan2.svelte";
+    import Keyboard from "./components/Keyboard.svelte";
+    import Eye from "./components/Eye.svelte";
+    import Barcode from "./components/Barcode.svelte";
 </script>
 
 <main>
@@ -21,6 +25,10 @@
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/recipe" component={Recipe} />
         <Route path="/inventory" component={Inventory} />
+        <Route path="/scan2" component={Scan2} />
+        <Route path="/keyboard" component={Keyboard} />
+        <Route path="/eye" component={Eye} />
+        <Route path="/barcode" component={Barcode} />
     </Router>
 </main>
 

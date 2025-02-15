@@ -29,15 +29,16 @@
             </div>
             <div class="form__line">
                 <label>password</label>
-                <input type="text" placeholder="Email" bind:value={password} />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    bind:value={password}
+                />
             </div>
         </div>
     </div>
     <div class="buttons">
         <button {onclick}>Continue</button>
-        <Link to="/scan">
-            <button class="outline">Scan</button>
-        </Link>
     </div>
 </main>
 
