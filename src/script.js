@@ -37,7 +37,20 @@ const startScanning = async () => {
 
 
   if (result.hasContent) {
-    alert(`Scanned content: ${result.content}`);
+    const code = result.content;
+    const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    if(!res.product.product_name) {
+      alert("Product not found");
+      return;
+    }
+
+    alert(res.product.product_name);
   } else {
     console.log("No content scanned");
   }
@@ -226,6 +239,6 @@ async function getIngredients(ingid) {
   })
   const res = await Promise.all(ingredients);
   const data = await Promise.all(res.map(r => r.json()));
-  console.log(data);
+  return data;
 }
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients };

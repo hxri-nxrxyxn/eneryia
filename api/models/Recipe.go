@@ -7,6 +7,7 @@ import (
 
 type Recipe struct {
 	RecipeID     uint          `gorm:"primaryKey;autoIncrement" json:"id"`
+	Image        *string       `gorm:"type:varchar(255)" json:"image"`
 	Name         *string       `gorm:"type:varchar(255)" json:"name"`
 	Instruction  string        `gorm:"type:varchar(255)" json:"instruction"`
 	CookingtTime int           `gorm:"type:int" json:"cooking_time"`
