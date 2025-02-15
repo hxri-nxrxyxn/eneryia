@@ -4,7 +4,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Storage } from "@capacitor/storage";
 
-const genAI = new GoogleGenerativeAI("AIzaSyBfIOaGUgU_WghuNbZV-YMb7qTb1Mjq_4w");
+const genAI = new GoogleGenerativeAI("AIzaSyBYvUGHs_md8FwJYkgHJOjF7wALmhOcAmY");
 const baseUrl = "https://api.laddu.cc/api/v1";
 
 async function setToken(token) {
@@ -31,9 +31,10 @@ const checkPermission = async () => {
 
 const startScanning = async () => {
   BarcodeScanner.hideBackground();
-  document.body.style.background = "transparent";
+  document.querySelector(".box").style.background = "transparent";
   const result = await BarcodeScanner.startScan();
-  document.body.style.background = "black";
+  document.querySelector(".box").style.background = "black";
+
 
   if (result.hasContent) {
     const code = result.content;
@@ -47,12 +48,42 @@ const startScanning = async () => {
       },
     );
     const res = await response.json();
-    if (!res.product.product_name) {
+    if (!res.product) {
       alert("Product not found");
       return;
     }
 
-    alert(res.product.product_name);
+    const name = res.product.product_name
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" ,"generationConfig": {
+      "response_mime_type": "application/json",
+}});
+    const prompt = `${name} for this product send only a json containing {name,calorie,quantity,expiry} if expiry is not sure make an estimate expiry is in days, the product quantity being then number of the products`;
+  const result2 = await model.generateContent(prompt);
+    const output = result2.response.text()
+    const out = JSON.parse(output)
+  console.log(out)
+  if(!out.products) {
+    const response = await fetch(`${baseUrl}/ingredient`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name : out.name,
+        calorie : Number(out.calorie),
+        quantity : Number(out.quantity),
+        expiry : out.expiry
+      }),
+    });
+    const res = await response.json();
+    if(!response.ok) {
+      console.log(res)
+      return
+    }
+    console.log(res)
+    return
+  }
+
   } else {
     console.log("No content scanned");
   }
@@ -253,6 +284,8 @@ async function runAI(base64) {
     
   );
 
+  console.log('t2')
+
   const imageParts = [
     { inlineData: {
       data: base64,
@@ -260,8 +293,12 @@ async function runAI(base64) {
     },
   ];
 
+  console.log('t3')
+
   const generatedContent = await model.generateContent([prompt, ...imageParts]);
   
+  console.log('t4')
+
   const output = generatedContent.response.text()
   const out = JSON.parse(output)
   console.log(out)
@@ -284,6 +321,27 @@ async function runAI(base64) {
       return
     }
     console.log(res)
+    const userdata = await checkUser();
+    const userid = userdata.id
+    const id = res.data.id;
+    const response3 = await fetch(`${baseUrl}/ingredient/${userid}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingid : id,
+      }),
+    });
+
+    const res3 = await response3.json();
+    if(!response3.ok){
+      alert(res3.message)
+      return
+    }
+    console.log(res3)
+    
+    alert("Product added")
     return
   }
 

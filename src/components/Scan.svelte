@@ -23,11 +23,12 @@
   async function takePhoto() {
     try {
       const image = await Camera.getPhoto({
-        quality: 90,
+        quality: 40,
         source: CameraSource.Camera, // Use "CameraSource.Photos" for gallery
         resultType: CameraResultType.Base64, // "Uri" returns the image URL
       });
 
+      console.log('t1')
       await runAI(image.base64String);
     } catch (error) {
       alert(error);
