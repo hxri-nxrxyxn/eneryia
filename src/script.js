@@ -376,11 +376,12 @@ async function generteRecipe() {
   const userdata = await checkUser();
   const ingid = userdata.ingid;
   const ingarr = await getIngredients(ingid);
-  console.log(String(ingarr)) 
+  const text = JSON.stringify(ingarr)
+
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" ,"generationConfig": {
     "response_mime_type": "application/json",
 }});
-  const prompt = `${ingarr} these are the ingredients which are nearing expiry genrate me in json all the recipies that can be made with it in this format {name,instruction,cooking_time,happy,calories,ingid } where instruction is cooking instruction for recipe, happy is the satisfaction score for the recipe, ingid is the id of the ingredients used in the recipe`;
+  const prompt = `${text} these are the ingredients which are nearing expiry genrate me in json all the recipies that can be made with it in this format {name,instruction,cooking_time,happy,calories,ingid } where instruction is cooking instruction for recipe, happy is the satisfaction score for the recipe, ingid is the id of the ingredients used in the recipe`;
   console.log(prompt)
 const result2 = await model.generateContent(prompt);
   const output = result2.response.text()
