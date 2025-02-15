@@ -6,10 +6,22 @@
     import Smile from "../assets/grin-alt.svg";
     import Muscle from "../assets/muscle.svg";
     import { checkUser, getRecipies } from "../script";
+
+    let recipes = []; // Array to store recipes
+
     const doCheck = async () => {
-        const data = await checkUser();
-        const arr = await getRecipies(data.recid);
-        alert(arr);
+        try {
+            const data = await checkUser();
+            if (data && data.recid) {
+                const arr = await getRecipies(data.recid);
+                recipes = arr;
+                console.log(recipes);
+            } else {
+                console.error("User data or recid is missing.");
+            }
+        } catch (error) {
+            console.error("Error fetching recipes:", error);
+        }
     };
 
     doCheck();
@@ -25,28 +37,86 @@
 
         <div class="featured">
             <h2>Featured</h2>
-            <div class="card">
-                <div class="card__banner"></div>
-                <div class="card__details">
-                    <div class="card__top">
-                        <h3>Paneer Curry</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Omnis, quibusdam?
-                        </p>
-                    </div>
-                    <div class="card__bottom">
-                        <p><img src={Stopwatch} alt="icon" /> <b>2D</b></p>
-                        <p><img src={Hourglass} alt="icon" /> <b>2D</b></p>
-                        <p><img src={Smile} alt="icon" /> <b>2D</b></p>
-                        <p><img src={Muscle} alt="icon" /> <b>2D</b></p>
+            {#each recipes as recipe}
+                <div class="card">
+                    <div
+                        class="card__banner"
+                        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
+                            '../assets/paneer.jpg'}')"
+                    ></div>
+                    <div class="card__details">
+                        <div class="card__top">
+                            <h3>{recipe.name}</h3>
+                            <p>
+                                {recipe.instruction ||
+                                    "No instructions available"}
+                            </p>
+                        </div>
+                        <div class="card__bottom">
+                            <p>
+                                <img src={Stopwatch} alt="icon" />
+                                <b>{recipe.cooking_time || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Hourglass} alt="icon" />
+                                <b>{recipe.cooking_time || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Smile} alt="icon" />
+                                <b>{recipe.happy || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Muscle} alt="icon" />
+                                <b>{recipe.calories || "N/A"}</b>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {:else}
+                <p>Loading recipes...</p>
+            {/each}
         </div>
 
         <div class="suggested">
             <h2>Suggested</h2>
+            {#each recipes as recipe}
+                <div class="card">
+                    <div
+                        class="card__banner"
+                        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{recipe.image ||
+                            '../assets/paneer.jpg'}')"
+                    ></div>
+                    <div class="card__details">
+                        <div class="card__top">
+                            <h3>{recipe.name}</h3>
+                            <p>
+                                {recipe.instruction ||
+                                    "No instructions available"}
+                            </p>
+                        </div>
+                        <div class="card__bottom">
+                            <p>
+                                <img src={Stopwatch} alt="icon" />
+                                <b>{recipe.cooking_time || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Hourglass} alt="icon" />
+                                <b>{recipe.cooking_time || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Smile} alt="icon" />
+                                <b>{recipe.happy || "N/A"}</b>
+                            </p>
+                            <p>
+                                <img src={Muscle} alt="icon" />
+                                <b>{recipe.calories || "N/A"}</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {:else}
+                <p>Loading recipes...</p>
+            {/each}
         </div>
     </div>
 </main>
