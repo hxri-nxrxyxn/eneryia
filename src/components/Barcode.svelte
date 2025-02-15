@@ -2,6 +2,14 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     import { Link } from "svelte-routing";
     import NavBot from "./NavBot.svelte";
+    import { App } from "@capacitor/app";
+    import { startScanning, stopScanning, checkUser } from "../script";
+
+    App.addListener("backButton", () => {
+        stopScanning();
+    });
+
+    checkUser();
 </script>
 
 <NavBot />
@@ -13,7 +21,7 @@
             Inventory
         </h1>
         <div class="box"></div>
-        <button>SCAN</button>
+        <button onclick={startScanning}>SCAN</button>
     </div>
 </main>
 
