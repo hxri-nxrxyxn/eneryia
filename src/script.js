@@ -4,7 +4,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Storage } from "@capacitor/storage";
 
-const genAI = new GoogleGenerativeAI("AIzaSyCDUkLFDYk24JYdPgRWo-KfbAYzehtWpX0");
+const genAI = new GoogleGenerativeAI("AIzaSyBfIOaGUgU_WghuNbZV-YMb7qTb1Mjq_4w");
 const baseUrl = "https://api.laddu.cc/api/v1";
 
 async function setToken(token) {
@@ -247,8 +247,13 @@ async function getIngredients(ingid) {
 }
 
 async function runAI(base64) {
-  const prompt = "A plate of food with a variety of ingredients on it.";
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+  try{
+  const prompt = "if the image has any products in it send only a json containing {name,calorie,quantity,expiry} if expiry is not sure make an estimate expiry is in days, the product quantity being then number of the products visible";
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" ,"generationConfig": {
+            "response_mime_type": "application/json",
+      }},
+    
+  );
 
   const imageParts = [
     { inlineData: {
@@ -259,7 +264,56 @@ async function runAI(base64) {
 
   const generatedContent = await model.generateContent([prompt, ...imageParts]);
   
-  return generatedContent.response.text()
+  const output = generatedContent.response.text()
+  const out = JSON.parse(output)
+  console.log(out)
+  if(!out.products) {
+    const response = await fetch(`${baseUrl}/ingredient`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name : out.name,
+        calorie : Number(out.calorie),
+        quantity : Number(out.quantity),
+        expiry : out.expiry
+      }),
+    });
+    const res = await response.json();
+    if(!response.ok) {
+      console.log(res)
+      return
+    }
+    console.log(res)
+    return
+  }
+
+  const arr = out.products;
+
+  const data = arr.map(async(d) => {
+    const response = await fetch(`${baseUrl}/ingredient`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name : d.name,
+        calorie : d.calorie,
+        quantity : d.quantity,
+        expiry : d.expiry
+      }),
+    });
+    const res = await response.json();
+    if(!response.ok) {
+      alert(res.message)
+    }
+    console.log(res)
+  })
+}
+catch(error) {
+  console.log(error);
+}
 }
 
 export { handleBackButton, signup, checkPermission, startScanning, stopScanning, checkUser, logout, login, collect, getRecipies, getIngredients, runAI };

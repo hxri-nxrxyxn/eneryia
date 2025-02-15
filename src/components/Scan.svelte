@@ -28,10 +28,7 @@
         resultType: CameraResultType.Base64, // "Uri" returns the image URL
       });
 
-      const output = runAI(image.base64String);
-
-      const res = await output;
-      alert(res);
+      await runAI(image.base64String);
     } catch (error) {
       alert(error);
     }
