@@ -1,6 +1,9 @@
 # Savr
 Application that suggests recipes based on near-expiry food items at home, reducing food waste.
 
+![Screenshot 2025-02-16 at 10 00 07 PM](https://github.com/user-attachments/assets/48cc68cf-d757-490b-9471-8babf2d798f1)
+
+
 ```
 .
 ├── detection
